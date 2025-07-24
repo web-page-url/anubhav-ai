@@ -301,7 +301,7 @@ export default function SimpleChat() {
         <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
           Anubhav AI
         </h1>
-        <p className="text-sm text-gray-600 dark:text-gray-400">Powered by Gemini</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400">Powered by OpenAI API</p>
       </div>
 
       {/* Messages */}

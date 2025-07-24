@@ -14,7 +14,7 @@ export default function ChatHeader() {
               Anubhav AI
             </h1>
             <p className="text-sm text-gray-600 dark:text-gray-400 font-medium">
-              Powered by Gemini
+              Powered by Open AI
             </p>
           </div>
         </div>

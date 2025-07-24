@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Anubhav AI - Powered by Gemini",
-  description: "An intelligent AI chatbot powered by Google's Gemini API with text-to-speech capabilities",
+  title: "Anubhav AI - Powered by Open AI ",
+  description: "An intelligent AI chatbot powered by OPEN AI API with text-to-speech capabilities",
   viewport: "width=device-width, initial-scale=1",
 };
 
