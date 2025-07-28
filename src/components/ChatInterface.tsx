@@ -10,7 +10,7 @@ export default function ChatInterface() {
     const [messages, setMessages] = useState<Message[]>([
         {
             id: '1',
-            content: "Hello! I'm Anubhav AI, powered by Google's Gemini. How can I help you today?",
+            content: "Hello! I'm Anubhav AI, How can I help you today?",
             role: 'assistant',
             timestamp: new Date(),
         },

@@ -14,7 +14,7 @@ export default function SimpleChat() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      text: "Hello! I'm Anubhav AI, powered by Open AI API. How can I help you today?",
+      text: "Hello! I'm Anubhav AI, How can I help you today?",
       isUser: false,
       timestamp: new Date(),
     },
@@ -169,10 +169,19 @@ export default function SimpleChat() {
     setIsLoading(true);
 
     try {
+      // Add knowledge base context to the message
+      const contextualMessage = `Context: You are Anubhav AI, a helpful and knowledgeable AI assistant created by Anubhav, a talented Software Developer from IIT Mandi who loves to create beautiful and amazing websites. 
+
+You should be helpful, informative, and engaging. Answer all questions to the best of your ability - whether they're about technology, philosophy, science, creativity, or any other topic. Don't be overly restrictive or avoid topics unless they're clearly harmful. Be conversational and provide thoughtful, comprehensive responses.
+
+When asked about your creator, mention that Anubhav is from IIT Mandi and specializes in creating beautiful web applications.
+
+User message: ${input}`;
+
       const response = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: input }),
+        body: JSON.stringify({ message: contextualMessage }),
       });
 
       const data = await response.json();
@@ -295,54 +304,67 @@ export default function SimpleChat() {
   };
 
   return (
-    <div className="h-screen flex flex-col bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-blue-900">
-      {/* Header */}
-      <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur border-b p-4 text-center">
-        <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          Anubhav AI
-        </h1>
-        <p className="text-sm text-gray-600 dark:text-gray-400">Powered by OpenAI API</p>
+    <div className="h-screen flex flex-col bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-100 dark:from-gray-900 dark:via-blue-900 dark:to-indigo-900">
+      {/* Header - Mobile Optimized */}
+      <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-md border-b border-gray-200/50 dark:border-gray-700/50 px-4 py-3 sm:py-4 text-center shadow-sm">
+        <div className="flex items-center justify-center gap-2 mb-1">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center shadow-lg">
+            <Bot className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
+          </div>
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+            Anubhav AI
+          </h1>
+        </div>
+        <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 font-medium">
+          Modern AI with Voice Features
+        </p>
       </div>
 
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+      {/* Messages - Mobile Optimized */}
+      <div className="flex-1 overflow-y-auto px-2 sm:px-4 py-3 sm:py-4 space-y-3 sm:space-y-4">
         {messages.map((message) => (
           <div key={message.id} className={`flex ${message.isUser ? 'justify-end' : 'justify-start'}`}>
-            <div className={`flex items-start gap-2 max-w-md ${message.isUser ? 'flex-row-reverse' : ''}`}>
-              {/* Avatar */}
-              <div className={`w-8 h-8 rounded-full flex items-center justify-center ${message.isUser ? 'bg-blue-500' : 'bg-purple-500'
+            <div className={`flex items-start gap-2 sm:gap-3 w-full max-w-[85%] sm:max-w-md lg:max-w-lg ${message.isUser ? 'flex-row-reverse' : ''}`}>
+              {/* Avatar - Mobile Optimized */}
+              <div className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center shadow-md flex-shrink-0 ${message.isUser
+                ? 'bg-gradient-to-br from-blue-500 to-blue-600'
+                : 'bg-gradient-to-br from-purple-500 to-indigo-600'
                 }`}>
-                {message.isUser ? <User className="w-4 h-4 text-white" /> : <Bot className="w-4 h-4 text-white" />}
+                {message.isUser ? (
+                  <User className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+                ) : (
+                  <Bot className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+                )}
               </div>
 
-              {/* Message Bubble */}
-              <div className="flex flex-col">
-                <div className={`relative px-4 py-3 rounded-2xl ${message.isUser
-                  ? 'bg-blue-500 text-white rounded-br-md'
-                  : 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white rounded-bl-md shadow-md'
+              {/* Message Bubble - Mobile Optimized */}
+              <div className="flex flex-col flex-1 min-w-0">
+                <div className={`relative px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl shadow-lg ${message.isUser
+                  ? 'bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-br-md'
+                  : 'bg-white dark:bg-gray-800 text-gray-900 dark:text-white rounded-bl-md border border-gray-200/50 dark:border-gray-700/50'
                   }`}>
-                  <div className="text-sm leading-relaxed pr-6">
+                  <div className="text-sm sm:text-base leading-relaxed pr-8 sm:pr-10">
                     {formatText(message.text)}
                   </div>
 
                   {!message.isUser && (
                     <button
                       onClick={() => speak(message.text, message.id)}
-                      className={`absolute top-2 right-2 p-1 rounded-full transition-colors ${playingId === message.id
-                        ? 'bg-red-500 text-white'
-                        : 'bg-purple-500 text-white hover:bg-purple-600'
+                      className={`absolute top-2 right-2 p-1.5 sm:p-2 rounded-full transition-all duration-200 shadow-md ${playingId === message.id
+                        ? 'bg-red-500 text-white scale-110'
+                        : 'bg-purple-500 text-white hover:bg-purple-600 hover:scale-105'
                         }`}
                     >
                       {playingId === message.id ? (
-                        <VolumeX className="w-3 h-3" />
+                        <VolumeX className="w-3 h-3 sm:w-4 sm:h-4" />
                       ) : (
-                        <Volume2 className="w-3 h-3" />
+                        <Volume2 className="w-3 h-3 sm:w-4 sm:h-4" />
                       )}
                     </button>
                   )}
                 </div>
 
-                <div className={`text-xs text-gray-500 mt-1 ${message.isUser ? 'text-right' : 'text-left'}`}>
+                <div className={`text-xs text-gray-500 dark:text-gray-400 mt-1 px-1 ${message.isUser ? 'text-right' : 'text-left'}`}>
                   {formatTime(message.timestamp)}
                 </div>
               </div>
@@ -350,18 +372,18 @@ export default function SimpleChat() {
           </div>
         ))}
 
-        {/* Loading */}
+        {/* Loading - Mobile Optimized */}
         {isLoading && (
           <div className="flex justify-start">
-            <div className="flex items-start gap-2 max-w-md">
-              <div className="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center">
-                <Bot className="w-4 h-4 text-white" />
+            <div className="flex items-start gap-2 sm:gap-3 max-w-[85%] sm:max-w-md">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 flex items-center justify-center shadow-md">
+                <Bot className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
               </div>
-              <div className="bg-white dark:bg-gray-700 px-4 py-3 rounded-2xl rounded-bl-md shadow-md">
+              <div className="bg-white dark:bg-gray-800 px-3 sm:px-4 py-2.5 sm:py-3 rounded-2xl rounded-bl-md shadow-lg border border-gray-200/50 dark:border-gray-700/50">
                 <div className="flex space-x-1">
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
+                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce"></div>
+                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                  <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
                 </div>
               </div>
             </div>
@@ -407,54 +429,60 @@ export default function SimpleChat() {
         </div>
       )}
 
-      {/* Input */}
-      <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur border-t p-4">
-        <div className="flex gap-2 max-w-4xl mx-auto">
-          {/* Voice Settings Button */}
+      {/* Input - Mobile Optimized */}
+      <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-md border-t border-gray-200/50 dark:border-gray-700/50 p-3 sm:p-4 shadow-lg">
+        <div className="flex gap-2 sm:gap-3 max-w-4xl mx-auto">
+          {/* Voice Settings Button - Mobile Optimized */}
           <button
             onClick={() => setShowVoiceSettings(true)}
-            className="px-3 py-3 bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-500 text-gray-700 dark:text-gray-200 rounded-full transition-colors"
+            className="p-2.5 sm:p-3 bg-gradient-to-br from-gray-200 to-gray-300 dark:from-gray-600 dark:to-gray-700 hover:from-gray-300 hover:to-gray-400 dark:hover:from-gray-500 dark:hover:to-gray-600 text-gray-700 dark:text-gray-200 rounded-full transition-all duration-200 shadow-md hover:shadow-lg active:scale-95"
             title="Voice Settings"
           >
-            <Settings className="w-5 h-5" />
+            <Settings className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
 
-          {/* Voice Input Button */}
+          {/* Voice Input Button - Mobile Optimized */}
           <button
             onClick={startListening}
             disabled={isLoading || isListening}
-            className={`px-3 py-3 rounded-full transition-colors ${isListening
-              ? 'bg-red-500 hover:bg-red-600 text-white animate-pulse'
-              : 'bg-green-500 hover:bg-green-600 text-white'
+            className={`p-2.5 sm:p-3 rounded-full transition-all duration-200 shadow-md hover:shadow-lg active:scale-95 ${isListening
+              ? 'bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 text-white animate-pulse'
+              : 'bg-gradient-to-br from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white'
               }`}
             title={isListening ? 'Listening...' : 'Voice Input'}
           >
-            {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+            {isListening ? (
+              <MicOff className="w-4 h-4 sm:w-5 sm:h-5" />
+            ) : (
+              <Mic className="w-4 h-4 sm:w-5 sm:h-5" />
+            )}
           </button>
 
+          {/* Input Field - Mobile Optimized */}
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && sendMessage()}
             placeholder={isListening ? 'Listening...' : 'Type your message...'}
-            className="flex-1 px-4 py-3 rounded-full border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="flex-1 px-3 sm:px-4 py-2.5 sm:py-3 rounded-full border border-gray-300/50 dark:border-gray-600/50 bg-white/90 dark:bg-gray-700/90 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all duration-200 shadow-sm text-sm sm:text-base"
             disabled={isLoading || isListening}
           />
 
+          {/* Send Button - Mobile Optimized */}
           <button
             onClick={sendMessage}
             disabled={!input.trim() || isLoading}
-            className="px-6 py-3 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-400 text-white rounded-full transition-colors"
+            className="p-2.5 sm:p-3 bg-gradient-to-br from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 disabled:from-gray-400 disabled:to-gray-500 text-white rounded-full transition-all duration-200 shadow-md hover:shadow-lg active:scale-95 disabled:cursor-not-allowed"
           >
-            <Send className="w-5 h-5" />
+            <Send className="w-4 h-4 sm:w-5 sm:h-5" />
           </button>
         </div>
 
-        {/* Current Voice Indicator */}
-        <div className="text-center mt-2">
-          <span className="text-xs text-gray-500 dark:text-gray-400">
-            Current Voice: {voiceOptions[selectedVoice].name}
+        {/* Current Voice Indicator - Mobile Optimized */}
+        <div className="text-center mt-2 sm:mt-3">
+          <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400 bg-gray-100/50 dark:bg-gray-700/50 px-2 py-1 rounded-full">
+            🎤 {voiceOptions[selectedVoice].name}
           </span>
         </div>
       </div>
