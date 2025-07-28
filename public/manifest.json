@@ -1,7 +1,7 @@
 {
   "name": "Anubhav AI - Intelligent Chatbot",
   "short_name": "Anubhav AI",
-  "description": "An intelligent AI chatbot created by Anubhav, a Software Developer from IIT Mandi. Powered by Google's Gemini API with voice features.",
+  "description": "An intelligent AI chatbot created by Anubhav, a Software Developer from IIT Mandi.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#1e40af",

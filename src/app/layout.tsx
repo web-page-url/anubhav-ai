@@ -13,15 +13,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Anubhav AI - Powered by Gemini",
-  description: "An intelligent AI chatbot created by Anubhav, a Software Developer from IIT Mandi. Powered by Google's Gemini API with advanced text-to-speech capabilities and voice recognition.",
-  keywords: "AI chatbot, Gemini API, Anubhav, IIT Mandi, voice recognition, text-to-speech, artificial intelligence",
+  title: "Anubhav AI",
+  description: "An intelligent AI chatbot created by Anubhav, a Software Developer from IIT Mandi. With advanced text-to-speech capabilities and voice recognition.",
+  keywords: "AI chatbot, Anubhav, IIT Mandi, voice recognition, text-to-speech, artificial intelligence",
   authors: [{ name: "Anubhav", url: "https://github.com/anubhav" }],
   creator: "Anubhav - Software Developer from IIT Mandi",
   viewport: "width=device-width, initial-scale=1",
   openGraph: {
     title: "Anubhav AI - Intelligent Chatbot with Voice Features",
-    description: "Experience the future of AI conversation with Anubhav AI. Created by a Software Developer from IIT Mandi, featuring Gemini API integration, voice recognition, and text-to-speech.",
+    description: "Experience the future of AI conversation with Anubhav AI. Created by a Software Developer from IIT Mandi, voice recognition, and text-to-speech.",
     url: "https://anubhav-ai.vercel.app",
     siteName: "Anubhav AI",
     images: [
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Anubhav AI - Powered by Gemini",
+    title: "Anubhav AI",
     description: "Intelligent AI chatbot with voice features, created by Anubhav from IIT Mandi",
     images: ["/ai-anubhav.jpeg"],
     creator: "@anubhav",
